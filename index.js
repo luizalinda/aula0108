@@ -1,42 +1,44 @@
-//carregar o módulo express 
+//caregar o módulo express 
+const {response, urlencoded} = require('express')
 const express = require('express')
 
 //carregar o módulo mongoose
 const mongoose = require('mongoose')
 
-//conectar com o banco de dados revisao
+//conectar com o banco de dados revisao 
 const conexao = ()=>{
-    mongoose.connect('mongodb+srv://userRevisao:revisao@fiaptecnico.0ptot.mongodb.net/test')
+    mongoose.connect('mongodb+srv://userRevisao:revisao@fiaptecnico.0ptot.mongodb.net/revisao')
 }
-
-//conectar com a collection infos
+//conectar com a collection infos 
 const modelo = new mongoose.Schema({
     nome:String,
-    turma: String,
-    disciplina: String
+    turma:String,
+    disciplina:String
 })
 const infos = mongoose.model('infos', modelo)
 
-//executar o módulo express
+//executar o módulo do express  
 const app = express()
 
 //definir o local padrão para os arquivos ejs
-app.set('views', './')
+app.set('views','./')
 
 //renderizar o arquivo index.ejs na requisição / (root)
-app.get('/', (req,res)=>{
-    //conectar com o revisao
+app.get('/',async(req,res)=>{
+    //conectar com o revisao 
     conexao()
     //buscar todos os dados de infos
-    const resultado = infos.find()
-    res.render('index.ejs', {resultado })
+    const resultado = await infos.find()
+    res.render('index.ejs',{resultado})
+})
+
+app.use(urlencoded({extend:false}))
+app.post('/', async(req,res)=>{
+    const dados = req.body
+    res.send(dados)
 })
 
 //ligar o servidor na porta 3050
 app.listen(3050, ()=>{
-    console.log('Servidor local em http://localhost:3050/')
+    console.log('servidor local em http://localhost:3050')
 })
-
-//node index
-//gravou a versao do script anterior, n é automático
-//p cada operacao script precisa interromper o server e rodar dnv 

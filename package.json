@@ -1,12 +1,12 @@
 {
-  "name": "revisao",
+  "name": "projetoposferias",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index",
-    "start": "nodem index"
+    "start": "node index"
   },
   "keywords": [],
   "author": "",
