@@ -35,10 +35,20 @@ app.get('/',async(req,res)=>{
 app.use(urlencoded({extend:false}))
 app.post('/', async(req,res)=>{
     const dados = req.body
-    res.send(dados)
+    //res.send(dados)
+    const gravar = new infos ({
+        nome:dados.nome,
+        turma:dados.turma,
+        disciplina:dados.disciplina
+    }).save()
+    res.redirect('/')
 })
 
+//campos-collection             
+//dados-infos do forms
+
+const porta = process.env.PORT || 3050
 //ligar o servidor na porta 3050
-app.listen(3050, ()=>{
+app.listen(porta, ()=>{
     console.log('servidor local em http://localhost:3050')
 })
